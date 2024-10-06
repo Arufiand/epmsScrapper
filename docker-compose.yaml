@@ -1,0 +1,20 @@
+services:
+  npm :
+    build:
+      context: ./dockerfiles
+      dockerfile: npm.dockerfile
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/epmsScrapper
+
+  apps:
+    container_name: scrapper
+    build:
+      context: .
+      dockerfile: dockerfiles/node.dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/epmsScrapper
+      - /epmsScrapper/node_modules
