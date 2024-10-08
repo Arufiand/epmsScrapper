@@ -10,5 +10,8 @@
   "private": true,
   "devDependencies": {
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "puppeteer": "^23.5.1"
   }
 }
