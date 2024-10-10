@@ -1,3 +1,10 @@
+const writeXlsxFile = require('write-excel-file/node')
+const path = require('path');
+const {counterDivider} = require("./counter.module");
+
+// Define jsonArray outside the function to store data across multiple calls
+let jsonArray = [];
+
 function dateCreator() {
     const now = new Date();
     return [
@@ -7,9 +14,87 @@ function dateCreator() {
     ].join('/');
 }
 
+async function jsonGenerator(data) {
+    jsonArray.push(data);  // Add new data to the existing array
+}
+
+// Export the jsonArray so you can access it from other files if needed
+function getJsonArray() {
+    return jsonArray;
+}
+
+async function jsonFormatter(page,name){
+    const infoSelector = 'div.dataTables_info';
+    await page.waitForSelector(infoSelector, { timeout: 60000 });
+
+    const tableInfo = await page.evaluate(() => {
+        const infoDiv = document.querySelector('div.dataTables_info');
+        return infoDiv ? infoDiv.innerText.trim() : null;
+    });
+
+    let array = tableInfo.split(' ');
+    if (tableInfo) {
+        let dividedCounters = counterDivider(array[5]);
+        let json =             {
+            "name" : name,
+            "Wilayah1" : parseInt(dividedCounters[0]),
+            "Wilayah2" : parseInt(dividedCounters[1]),
+            "Wilayah3" : parseInt(dividedCounters[2]),
+        }
+
+        await jsonGenerator(json);
+        console.log(JSON.stringify(json, null, 2));
+    } else {
+        console.log("No pagination info found.");
+    }
+}
+
+// Function to write data to an Excel file
+async function saveToExcel(date) {
+    const filePath = path.join('/epmsScrapper/data', `daily_report.xlsx`);
+    const objects = jsonArray;
+    const schema = [
+        {
+            column: 'Name',
+            type: String,
+            value: dailyReport => dailyReport.name
+        },
+        {
+            column: 'Wilayah 1',
+            type: Number,
+            // format: 'mm/dd/yyyy',
+            value: dailyReport => dailyReport.Wilayah1
+        },
+        {
+            column: 'Wilayah 2',
+            type: Number,
+            // format: '#,##0.00',
+            value: dailyReport => dailyReport.Wilayah2
+        },
+        {
+            column: 'Wilayah 3',
+            type: Number,
+            value: dailyReport => dailyReport.Wilayah3
+        }
+    ]
+    try {
+        // fs.writeFileSync(filePath.replace('.xlsx', '.txt'), 'Test data 2');
+        await writeXlsxFile(objects, {
+            schema,
+            filePath: filePath
+        })
+        console.log('Text file written successfully.');
+    } catch (error) {
+        console.error(`Error writing text file: ${error}`);
+    }
+}
 
 
 // Export the functions using module.exports
 module.exports = {
-    dateCreator
+    dateCreator,
+    jsonGenerator,
+    getJsonArray,
+    saveToExcel,
+    jsonFormatter
 };
