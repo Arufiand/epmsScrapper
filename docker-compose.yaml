@@ -7,9 +7,9 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
-#        - ./:/epmsScrapper #For Mac and Linux
-#        - /mnt/wsl/docker-desktop-bind-mounts/Ubuntu/a95a6f949cf57f9b5d993ec07629e84cc4163ef8b2d79f19ee99367163fe8658:/epmsScrapper
+#      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
+        - ./:/epmsScrapper #For Mac and Linux
+#        - /mnt/c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper
 
 
   scrapper:
@@ -17,13 +17,13 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/node.dockerfile
-    ports:
-      - '3000:3000'
     volumes:
-      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
-#      - ./:/epmsScrapper #For Mac and Linux
-#      - /mnt/wsl/docker-desktop-bind-mounts/Ubuntu/a95a6f949cf57f9b5d993ec07629e84cc4163ef8b2d79f19ee99367163fe8658:/epmsScrapper
+#      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
+      - ./:/epmsScrapper #For Mac and Linux
+#      - /mnt/c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper
       - /epmsScrapper/node_modules
+      - /root/.config/puppeteer:/root/.config/puppeteer
+
 #    develop:
 #      watch:
 #        - action: sync

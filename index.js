@@ -8,7 +8,9 @@ const {puppeteerInitiator, logger} = require("./src/initiator.module");
     const browser = await puppeteer.launch({
         // args: ['--no-sandbox', '--disable-setuid-sandbox'] // if using HTTPS
         args: ['--no-sandbox', '--disable-setuid-sandbox', '--ignore-certificate-errors', '--allow-insecure-localhost'],
-        ignoreHTTPSErrors: true // Ensures Puppeteer ignores HTTPS-related errors
+        ignoreHTTPSErrors: true ,// Ensures Puppeteer ignores HTTPS-related errors
+        executablePath: '/usr/bin/chromium',  // Use the installed Chromium
+        headless: true,  // Run in headless mode
     });
     const page = await browser.newPage();
     await puppeteerInitiator(page);
