@@ -14,6 +14,18 @@ function dateCreator() {
     ].join('/');
 }
 
+function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function jsonGenerator(data) {
     jsonArray.push(data);  // Add new data to the existing array
 }
@@ -31,7 +43,7 @@ async function jsonFormatter(page,name){
         const infoDiv = document.querySelector('div.dataTables_info');
         return infoDiv ? infoDiv.innerText.trim() : null;
     });
-
+    console.log(`tableInfo ${tableInfo}`);
     let array = tableInfo.split(' ');
     if (tableInfo) {
         let dividedCounters = counterDivider(array[5]);
@@ -50,8 +62,10 @@ async function jsonFormatter(page,name){
 }
 
 // Function to write data to an Excel file
-async function saveToExcel(date) {
-    const filePath = path.join('/epmsScrapper/data', `daily_report.xlsx`);
+async function saveToExcel() {
+    const currentDate = new Date();
+    const formattedDate = formatDate(currentDate);
+    const filePath = path.join('/epmsScrapper/data', `daily_report_${formattedDate}.xlsx`);
     const objects = jsonArray;
     const schema = [
         {
@@ -96,5 +110,6 @@ module.exports = {
     jsonGenerator,
     getJsonArray,
     saveToExcel,
-    jsonFormatter
+    jsonFormatter,
+    delay
 };

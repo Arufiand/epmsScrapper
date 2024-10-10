@@ -1,7 +1,8 @@
 require('dotenv').config();
 const puppeteer = require('puppeteer');
-const {plantingDailyReportFetcher} = require("./src/production");
+const {masterPlantingFetch} = require("./src/planting");
 const {puppeteerInitiator, logger} = require("./src/initiator.module");
+const {saveToExcel} = require("./src/general.module");
 
 (async () => {
     // Launch the browser and open a new blank page
@@ -15,6 +16,8 @@ const {puppeteerInitiator, logger} = require("./src/initiator.module");
     const page = await browser.newPage();
     await puppeteerInitiator(page);
     logger(page);
-    await plantingDailyReportFetcher(page);
+    await masterPlantingFetch(page);
     await browser.close();
+
+    await saveToExcel();
 })();
