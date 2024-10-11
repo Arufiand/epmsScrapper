@@ -1,20 +1,37 @@
 services:
   npm :
+    container_name: npm
     build:
       context: ./dockerfiles
       dockerfile: npm.dockerfile
     stdin_open: true
     tty: true
     volumes:
-      - ./:/epmsScrapper
+        - ./:/epmsScrapper #For Mac and Linux
+#        - /mnt/c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper
+#      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
 
-  apps:
+
+  scrapper:
     container_name: scrapper
     build:
       context: .
       dockerfile: dockerfiles/node.dockerfile
-    ports:
-      - '3000:3000'
     volumes:
-      - ./:/epmsScrapper
+      - ./:/epmsScrapper #For Mac and Linux
       - /epmsScrapper/node_modules
+      - /root/.config/puppeteer:/root/.config/puppeteer
+      - ./local-data:/epmsScrapper/data
+#      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
+#      - /mnt/c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper
+
+## Do not remove this line below!
+#    develop:
+#      watch:
+#        - action: sync
+#          path: ./
+#          target: /epmsScrapper
+#          ignore:
+#            - node_modules/
+#        - action: rebuild
+#          path: package.json

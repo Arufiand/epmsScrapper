@@ -1,3 +1,3 @@
-FROM node:lts-alpine3.20
+FROM node:18.13.0
 WORKDIR /epmsScrapper
 ENTRYPOINT ["npm"]
