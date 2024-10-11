@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 const {masterPlantingFetch} = require("./src/planting");
 const {puppeteerInitiator, logger} = require("./src/initiator.module");
 const {saveToExcel} = require("./src/general.module");
+const {masterProductionFetch} = require("./src/production");
 
 (async () => {
     // Launch the browser and open a new blank page
@@ -15,8 +16,10 @@ const {saveToExcel} = require("./src/general.module");
     });
     const page = await browser.newPage();
     await puppeteerInitiator(page);
-    logger(page);
-    await masterPlantingFetch(page);
+    // logger(page);
+    // await masterPlantingFetch(page);
+    // await masterProductionFetch(page);
+    // await masterQciFetch(page);
     await browser.close();
 
     await saveToExcel();
