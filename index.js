@@ -19,9 +19,9 @@ const {masterPqaFetch} = require("./src/pqa");
     const page = await browser.newPage();
     await puppeteerInitiator(page);
     logger(page);
-    // await masterPlantingFetch(page);
-    // await masterProductionFetch(page);
-    // await masterQciFetch(page);
+    await masterPlantingFetch(page);
+    await masterProductionFetch(page);
+    await masterQciFetch(page);
     await masterPqaFetch(page);
     await browser.close();
 

@@ -14,7 +14,7 @@ async function pqaFetcher(page, URL, REPORT) {
 
     // Wait for the date to be set and submit to be clicked
     await Promise.all([
-        page.click(`text=Submit`),
+        page.click(`text=Load`),
         page.waitForResponse(response => response.ok() && response.url().includes('/pqa/sectionhead/get_workplan')) // Adjust this URL as needed
     ]);
 
