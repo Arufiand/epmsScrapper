@@ -6,6 +6,7 @@ const {saveToExcel} = require("./src/general.module");
 const {masterProductionFetch} = require("./src/production");
 const {masterQciFetch} = require("./src/qci");
 const {masterPqaFetch} = require("./src/pqa");
+// const { main } = require('./src/mailer.module');
 
 (async () => {
     // Launch the browser and open a new blank page
@@ -26,4 +27,5 @@ const {masterPqaFetch} = require("./src/pqa");
     await browser.close();
 
     await saveToExcel();
+    // main().catch(console.error);
 })();
