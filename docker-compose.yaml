@@ -14,9 +14,9 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/node.dockerfile
+      target: ${NODE_ENV}
     volumes:
       - ./:/epmsScrapper #For Mac and Linux
-      - /epmsScrapper/node_modules
       - /root/.config/puppeteer:/root/.config/puppeteer
       - ./local-data:/epmsScrapper/data
       - "${HOST_DATA_PATH}:/epmsScrapper/data"
