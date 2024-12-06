@@ -32,6 +32,8 @@ async function masterProductionFetch(page) {
     await productionFetcher(page, process.env.DAILY_REPORT_PRODUCTION_DELIVERY_URL,  process.env.DAILY_REPORT_PRODUCTION_DELIVERY, true, "date_from", "date_to", "Load");
     await delay(500); // Wait for 5 seconds
     await productionFetcher(page, process.env.DAILY_REPORT_PRODUCTION_JURNAL_ALAT_BERAT_URL,process.env.DAILY_REPORT_PRODUCTION_JURNAL_ALAT_BERAT, true, "startdate", "enddate", "Submit" );
+    await delay(500); // Wait for 5 seconds
+    await productionFetcher(page, process.env.DAILY_REPORT_NURSERY_DAILY_REPORT_URL,process.env.DAILY_REPORT_NURSERY_DAILY_REPORT, true, "startdate", "enddate", "Submit" );
 }
 module.exports ={
     masterProductionFetch,

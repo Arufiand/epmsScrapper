@@ -8,30 +8,16 @@ services:
     tty: true
     volumes:
         - ./:/epmsScrapper #For Mac and Linux
-#        - /mnt/c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper
-#      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
-
 
   scrapper:
     container_name: scrapper
     build:
       context: .
       dockerfile: dockerfiles/node.dockerfile
+      target: ${NODE_ENV}
     volumes:
       - ./:/epmsScrapper #For Mac and Linux
-      - /epmsScrapper/node_modules
       - /root/.config/puppeteer:/root/.config/puppeteer
       - ./local-data:/epmsScrapper/data
-#      - /c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper # for Windows
-#      - /mnt/c/Users/62220921/WebstormProjects/epmsScrapper:/epmsScrapper
+      - ${HOST_DATA_PATH}:/epmsScrapper/data
 
-## Do not remove this line below!
-#    develop:
-#      watch:
-#        - action: sync
-#          path: ./
-#          target: /epmsScrapper
-#          ignore:
-#            - node_modules/
-#        - action: rebuild
-#          path: package.json
