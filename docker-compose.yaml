@@ -19,4 +19,5 @@ services:
       - ./:/epmsScrapper #For Mac and Linux
       - /root/.config/puppeteer:/root/.config/puppeteer
       - ./local-data:/epmsScrapper/data
-      - "${HOST_DATA_PATH}:/epmsScrapper/data"
+      - ${HOST_DATA_PATH}:/epmsScrapper/data
+
